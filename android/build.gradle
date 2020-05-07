@@ -1,6 +1,8 @@
+apply plugin: 'com.android.application'
+
 android {
-    buildToolsVersion '26.0.2'
-    compileSdkVersion 24
+    compileSdkVersion 17
+    buildToolsVersion '28.0.3'
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -12,14 +14,25 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        instrumentTest.setRoot('tests')
+        //instrumentTest.setRoot('tests')
     }
     defaultConfig {
         applicationId 'net.scadsdnd.randomatic'
         minSdkVersion 8
-        targetSdkVersion 24
+        targetSdkVersion 27
+        maxSdkVersion 27
     }
     productFlavors {
+    }
+    compileOptions {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 // called every time gradle gets executed, takes the native dependencies of
