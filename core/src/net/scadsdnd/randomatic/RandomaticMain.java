@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.*;
-import java.util.*;
-
-import javax.swing.Spring;
-
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector3;
 
 public class RandomaticMain extends ApplicationAdapter {
 	ShapeRenderer shapeRenderer;
@@ -18,6 +16,8 @@ public class RandomaticMain extends ApplicationAdapter {
 	int balls;
 	Coordinator[] coord;
 	float[][] colmx;
+	int score;
+	float[] hit;
 
 	//otput
 	SpriteBatch batch;
@@ -25,7 +25,7 @@ public class RandomaticMain extends ApplicationAdapter {
 
 	public void Recolor(){
 
-		balls = (int) Math.round( (float)Math.random() *100 );
+		balls = (int) Math.round( (float)Math.random() * 10 );
 		coord = new Coordinator[balls];
 		colmx = new float[balls][4];
 
@@ -44,6 +44,7 @@ public class RandomaticMain extends ApplicationAdapter {
 	@Override
 	public void create()
 	{
+		score = 0;
 		camera = new OrthographicCamera();
 		configureCamera();
 		shapeRenderer = new ShapeRenderer();
@@ -53,7 +54,7 @@ public class RandomaticMain extends ApplicationAdapter {
 		//otput
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-
+		hit = new float[2];
 	}
 
 	@Override
@@ -74,25 +75,59 @@ public class RandomaticMain extends ApplicationAdapter {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-		for (int c=0; c<balls; c++){
-			shapeRenderer.setColor(colmx[c][0], colmx[c][1], colmx[c][2], colmx[c][3]);
-			shapeRenderer.circle(coord[c].x, coord[c].y, coord[c].r);
-			coord[c].Move(); coord[c].Check();
+		Vector3 cleanHit = new Vector3(0,0,0);
+
+		// Gdx.input origin is top-left corner
+		// getX\getY is in screen coordinates
+		if (Gdx.input.justTouched()) {
+			// camera.unproject is a converter from screen coordinates to world.
+			cleanHit = camera.unproject(
+					new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			hit[0] = cleanHit.x;
+			hit[1] = cleanHit.y;
 		}
 
+		for (int c=0; c<balls; c++){
+			if (coord[c]!=null) {
+				// shapeRenderer origin is lower-left corner
+				shapeRenderer.setColor(colmx[c][0], colmx[c][1], colmx[c][2], colmx[c][3]);
+				shapeRenderer.circle(coord[c].x, coord[c].y, coord[c].r);
+
+				Circle myC = new Circle(coord[c].x, coord[c].y, coord[c].r);
+
+				coord[c].Move();
+				coord[c].BorderCheck();
+
+				if (myC.contains(cleanHit.x, cleanHit.y)) {
+					score += 1;
+					coord[c] = null;
+				}
+				myC = null;
+			}
+		}
+
+		int remBalls = coord.length - score;
+
+		// last hit mark
+		shapeRenderer.setColor(0,0,0, 1);
+		shapeRenderer.rect(hit[0], hit[1], 10,10);
+
 		shapeRenderer.end();
+		//shapeRenderer.dispose();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 
-		if (Gdx.input.justTouched()){ Recolor(); }
+		if (remBalls<=0){
+			Recolor();
+			score = 0;
+		}
 
-		//otput 
+		//otput
 		batch.begin();
 		font.setColor(Color.BLACK);
-		//font.draw(batch, Float.toString(colmx[0][0]) + ' ' + Float.toString(colmx[0][1]) + ' ' + Float.toString(colmx[0][2]) + ' ' + Float.toString(colmx[0][3]), 100, 50);
-		//font.draw(batch, Float.toString(colmx[1][0]) + ' ' + Float.toString(colmx[1][1]) + ' ' + Float.toString(colmx[1][2]) + ' ' + Float.toString(colmx[1][3]), 100, 70);
-		//font.draw(batch, Float.toString(colmx[2][0]) + ' ' + Float.toString(colmx[2][1]) + ' ' + Float.toString(colmx[2][2]) + ' ' + Float.toString(colmx[2][3]), 100, 90);
-		//font.draw(batch,Integer.toString(balls2), 100, 90);
-		//font.draw(batch,Float.toString(balls3), 100, 110);
+		//font.draw(batch, new Circle(coord[0].x, coord[0].y, coord[0].r).toString(), coord[0].x, coord[0].y+20);
+		font.draw(batch, "Last hit: " + Float.toString(hit[0]) + ' ' + Float.toString(hit[1]), 10, 60);
+		font.draw(batch, "Balls remain: " + Integer.toString(remBalls) + ' ', 10, 40);
+		font.draw(batch, "Your hits: " + Integer.toString(score) + ' ', 10, 20);
 		batch.end();
 
 
@@ -173,11 +208,25 @@ class Coordinator{
 
 	}
 
-	void Check(){
+	void BorderCheck(){
 		if ( this.x+this.r > this.cam.viewportWidth) {this.bx=false; this.br=!this.br;}
 		if ( this.y+this.r > this.cam.viewportHeight) {this.by=false; this.br=!this.br;}
 		if ( this.x+this.r < this.r*2) {this.bx=true; this.br=!this.br;}
 		if ( this.y+this.r < this.r*2) {this.by=true; this.br=!this.br;}
 		if ( this.r<=15 || this.r>=this.cam.viewportWidth/2 || this.r>=this.cam.viewportHeight/2 ) { this.br=!this.br; }
+	}
+
+	boolean ClickTest() {
+		if (
+				Gdx.input.getX() < this.x + this.r &&
+				Gdx.input.getX() > this.x - this.r &&
+				Gdx.input.getY() < this.y + this.r &&
+				Gdx.input.getY() > this.y - this.r
+						//&&	Gdx.input.justTouched()
+		){
+			return true;
+		} else{
+			return false;
+		}
 	}
 }

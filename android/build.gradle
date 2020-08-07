@@ -1,6 +1,16 @@
+apply plugin: 'com.android.application'
+
 android {
-    buildToolsVersion '26.0.2'
-    compileSdkVersion 24
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\SCAD\\.android\\debug.keystore')
+            storePassword '198864'
+            keyAlias 'androiddebugkey'
+            keyPassword '198864'
+        }
+    }
+    compileSdkVersion 17
+    buildToolsVersion '29.0.2'
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -12,14 +22,30 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        instrumentTest.setRoot('tests')
+        //instrumentTest.setRoot('tests')
     }
     defaultConfig {
         applicationId 'net.scadsdnd.randomatic'
         minSdkVersion 8
-        targetSdkVersion 24
+        targetSdkVersion 17
+        maxSdkVersion 27
     }
     productFlavors {
+    }
+    compileOptions {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
 }
 // called every time gradle gets executed, takes the native dependencies of
