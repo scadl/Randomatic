@@ -11,15 +11,18 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector3;
 
 public class RandomaticMain extends ApplicationAdapter {
+
 	// Global engine variables, empty
 	ShapeRenderer shapeRenderer;
 	OrthographicCamera camera;
+
 	// Global game variables, empty
 	int balls;
 	Coordinator[] coord;
 	float[][] colmx;
 	int score;
 	float[] hit;
+
 	// Global text output variables, empty
 	SpriteBatch batch;
 	BitmapFont font;
@@ -128,8 +131,8 @@ public class RandomaticMain extends ApplicationAdapter {
 		int remBalls = coord.length - score;
 
 		// Draw the small mark at last hit coords with black color
-		shapeRenderer.setColor(0,0,0, 1);
-		shapeRenderer.rect(hit[0], hit[1], 10,10);
+		shapeRenderer.setColor(0,0,0, 0.7f);					// Set color: black, opaque
+		shapeRenderer.circle(hit[0], hit[1], 5, 4);	// Set center, radius, segments of circle.
 
 		shapeRenderer.end();				// Stop shape Drawing engine
 		Gdx.gl.glDisable(GL20.GL_BLEND);	// Disable Alpha support
@@ -144,7 +147,6 @@ public class RandomaticMain extends ApplicationAdapter {
 		batch.begin();					// Start the text renderer
 		font.setColor(Color.BLACK);		// Set font color
 		//Print out some info in UI for the player
-		font.draw(batch, "Last hit: " + Float.toString(hit[0]) + ' ' + Float.toString(hit[1]), 10, 60);
 		font.draw(batch, "Balls remain: " + Integer.toString(remBalls) + ' ', 10, 40);
 		font.draw(batch, "Your hits: " + Integer.toString(score) + ' ', 10, 20);
 		batch.end();					// Stop the text renderer
@@ -195,6 +197,7 @@ public class RandomaticMain extends ApplicationAdapter {
 // My custom class
 // Maintaining all Balls properties and manipulations
 class Coordinator{
+
 	// Class-wide variables
 	public float x, y, r;							// Coords and Radius
 	private boolean bx=true, by=true, br=true;		// Moving directions
@@ -206,6 +209,7 @@ class Coordinator{
 		this.x=x; this.y=y; this.r=r; this.cam=cam;
 		this.speed=spd; this.groth=gth;
 	}
+
 	// Constructor N2 - Spawn a Ball at random coords, with random radius and speed
 	Coordinator(OrthographicCamera cam){
 		this.x= (float) Math.random() * cam.viewportWidth ;		// [0 .. ~800]
