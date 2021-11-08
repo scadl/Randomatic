@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector3;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
 public class RandomaticMain extends ApplicationAdapter {
 
 	// Global engine variables, empty
@@ -146,9 +148,10 @@ public class RandomaticMain extends ApplicationAdapter {
 		//Text output block
 		batch.begin();					// Start the text renderer
 		font.setColor(Color.BLACK);		// Set font color
+		font.getData().setScale(3);		// Set text scale
 		//Print out some info in UI for the player
-		font.draw(batch, "Balls remain: " + Integer.toString(remBalls) + ' ', 10, 40);
-		font.draw(batch, "Your hits: " + Integer.toString(score) + ' ', 10, 20);
+		font.draw(batch, "Balls remain: " + Integer.toString(remBalls) + ' ', 10, 50);
+		font.draw(batch, "Your hits: " + Integer.toString(score) + ' ', 20, 100);
 		batch.end();					// Stop the text renderer
 
 
@@ -159,10 +162,11 @@ public class RandomaticMain extends ApplicationAdapter {
 	// This will calculate height or width of the window from the smallest side set to 800 pixels
 	private void configureCamera()
 	{
+		int desktopSide = 1024;
 		if (Gdx.graphics.getHeight() < Gdx.graphics.getWidth())
-			camera.setToOrtho(false, 800, 800 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+			camera.setToOrtho(false, desktopSide, desktopSide * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 		else
-			camera.setToOrtho(false, 800 * Gdx.graphics.getWidth() / Gdx.graphics.getHeight(), 800);
+			camera.setToOrtho(false, desktopSide * Gdx.graphics.getWidth() / Gdx.graphics.getHeight(), desktopSide);
 	}
 
 	// Called when renderers destroyed

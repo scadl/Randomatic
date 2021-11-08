@@ -8,9 +8,15 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword '198864'
         }
+        release {
+            storeFile file('D:\\Works\\Mobile Apps\\my_cert.crt')
+            storePassword '198864'
+            keyAlias 'key0'
+            keyPassword '198864'
+        }
     }
     compileSdkVersion 17
-    buildToolsVersion '29.0.2'
+    buildToolsVersion '29.0.3'
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -27,14 +33,15 @@ android {
     defaultConfig {
         applicationId 'net.scadsdnd.randomatic'
         minSdkVersion 8
-        targetSdkVersion 17
+        targetSdkVersion 29
         maxSdkVersion 27
+        versionCode defaultVersionCode
     }
     productFlavors {
     }
     compileOptions {
         sourceCompatibility = '1.7'
-        targetCompatibility = '1.7'
+        targetCompatibility = 1.8
     }
     lintOptions {
         checkReleaseBuilds false
@@ -45,6 +52,9 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+        }
+        release {
+            versionNameSuffix '2'
         }
     }
 }
