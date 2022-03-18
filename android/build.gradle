@@ -4,9 +4,7 @@ android {
     signingConfigs {
         debug {
             storeFile file('C:\\Users\\SCAD\\.android\\debug.keystore')
-            storePassword '198864'
             keyAlias 'androiddebugkey'
-            keyPassword '198864'
         }
         release {
             storeFile file('D:\\Works\\Mobile Apps\\my_cert.crt')
@@ -27,8 +25,7 @@ android {
             assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
         }
-
-        //instrumentTest.setRoot('tests')
+        androidTest.setRoot('tests')
     }
     defaultConfig {
         applicationId 'net.scadsdnd.randomatic'
