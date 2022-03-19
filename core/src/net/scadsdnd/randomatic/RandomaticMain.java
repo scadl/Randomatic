@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector3;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class RandomaticMain extends Game {
@@ -25,6 +26,7 @@ public class RandomaticMain extends Game {
 	// Global text output variables, empty
 	SpriteBatch batch;
 	BitmapFont font;
+	Stage myStage;
 
 	// Create game field
 	@Override
@@ -35,8 +37,14 @@ public class RandomaticMain extends Game {
 		font = new BitmapFont();				// Init simple text font
 		shapeRenderer = new ShapeRenderer();	// Init the Shapes Drawing engine
 		camera = new OrthographicCamera();		// Create an camera
+		myStage = new Stage();					// Scene for UI
 
-		setScreen(new GameBoard(this));
+		// Antialiasing for font layer
+		font.getRegion().getTexture().setFilter(
+				Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		font.getData().setScale(3, 3);			// Set text scale
+
+		setScreen(new MainMenu(this));
 	}
 
 	// Called when renderers destroyed
@@ -47,4 +55,6 @@ public class RandomaticMain extends Game {
 		batch.dispose();
 		font.dispose();
 	}
+
+
 }

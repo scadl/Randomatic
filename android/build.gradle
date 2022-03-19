@@ -30,9 +30,9 @@ android {
     defaultConfig {
         applicationId 'net.scadsdnd.randomatic'
         minSdkVersion 17
+        maxSdkVersion 31
         targetSdkVersion 30
-        maxSdkVersion 30
-        versionCode defaultVersionCode
+        versionCode 5
     }
     productFlavors {
     }
@@ -100,7 +100,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.mygdx.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'net.scadsdnd.randomatic/net.scadsdnd.randomatic.AndroidLauncher'
 }
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {
