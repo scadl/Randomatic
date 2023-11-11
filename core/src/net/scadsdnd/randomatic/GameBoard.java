@@ -188,11 +188,11 @@ public class GameBoard extends ScreenAdapter {
         randomaticGame.font.setColor(Color.BLACK);		// Set font color
         //Print out some info in UI for the player
         if (!isZen) {
-            randomaticGame.font.draw(randomaticGame.batch, "Lives: " + Integer.toString(limit) + ' ', 10, 200);
-            randomaticGame.font.draw(randomaticGame.batch, "Misses: " + Integer.toString(miss) + ' ', 10, 150);
+            randomaticGame.font.draw(randomaticGame.batch, randomaticGame.langStrs.get("lbl_lives") + Integer.toString(limit) + ' ', 10, 200);
+            randomaticGame.font.draw(randomaticGame.batch, randomaticGame.langStrs.get("lbl_miss") + Integer.toString(miss) + ' ', 10, 150);
         }
-        randomaticGame.font.draw(randomaticGame.batch, "Your hits: " + Integer.toString(score) + ' ', 10, 100);
-        randomaticGame.font.draw(randomaticGame.batch, "Balls remain: " + Integer.toString(remBalls) + ' ', 10, 50);
+        randomaticGame.font.draw(randomaticGame.batch, randomaticGame.langStrs.get("lbl_hits") + Integer.toString(score) + ' ', 10, 100);
+        randomaticGame.font.draw(randomaticGame.batch, randomaticGame.langStrs.get("lbl_remain") + Integer.toString(remBalls) + ' ', 10, 50);
         randomaticGame.batch.end();					// Stop the text renderer
 
 

@@ -55,10 +55,10 @@ public class ResultScreen extends ScreenAdapter {
 
         // Handle final Labels
         Color lblColor = Color.RED;
-        String lblText = "You loose!\nTry again!";
+        String lblText = randomaticGame.langStrs.get("lbl_lose");
         if(isWin){
             lblColor = Color.GREEN;
-            lblText = "You win!\nCongrats!";
+            lblText = randomaticGame.langStrs.get("lbl_win");
         }
         Label.LabelStyle lblStyle = new Label.LabelStyle(randomaticGame.font, lblColor);
         Label lblResult = new Label(lblText, lblStyle);

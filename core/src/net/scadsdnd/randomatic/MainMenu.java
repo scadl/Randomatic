@@ -2,6 +2,7 @@ package net.scadsdnd.randomatic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -13,15 +14,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.I18NBundle;
+
+import java.util.Locale;
+
+import sun.misc.Resource;
 
 public class MainMenu extends ScreenAdapter {
 
     // UI basics
     // https://libgdx.com/wiki/graphics/2d/scene2d/scene2d-ui
     // https://rskupnik.github.io/libgdx-ui-overview
+    // https://libgdx.com/wiki/internationalization-and-localization
 
     RandomaticMain randomaticGame;
     Skin mySkin;
+
+
 
     public MainMenu(RandomaticMain game){
         this.randomaticGame = game;
@@ -37,7 +46,7 @@ public class MainMenu extends ScreenAdapter {
         // Programmatically create a skin - collection of ui properties
         mySkin = new Skin();
 
-        // Programmatically a Texture
+        // Programmatically add a Texture
         Pixmap myPixmap = new Pixmap(1, 1, Pixmap.Format.RGB888);
         myPixmap.setColor(Color.WHITE);
         myPixmap.fill();
@@ -71,14 +80,14 @@ public class MainMenu extends ScreenAdapter {
         myTable.row();
 
         Label.LabelStyle lblStyle = new Label.LabelStyle(randomaticGame.font, Color.BLACK);
-        Label lblResult = new Label("RANDOMatic", lblStyle);
+        Label lblResult = new Label( randomaticGame.langStrs.get("app_title"), lblStyle);
         myTable.add(lblResult).pad(15);
         myTable.row();
 
         // Finally crate a button widget and add it to table skeleton
-        final TextButton btnZen = new TextButton("Zen Mode", mySkin, "myBtnStyle");
-        final TextButton btnChallange = new TextButton("Challange", mySkin, "myBtnStyle");
-        final TextButton btnExit = new TextButton("Exit", mySkin, "myBtnStyle");
+        final TextButton btnZen = new TextButton(randomaticGame.langStrs.get("mode_zen"), mySkin, "myBtnStyle");
+        final TextButton btnChallange = new TextButton(randomaticGame.langStrs.get("mode_chalange"), mySkin, "myBtnStyle");
+        final TextButton btnExit = new TextButton(randomaticGame.langStrs.get("cmd_exit"), mySkin, "myBtnStyle");
         myTable.add(btnZen).width(300).pad(5);
         myTable.row();
         myTable.add(btnChallange).width(300).pad(5);
