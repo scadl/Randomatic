@@ -3,13 +3,13 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         debug {
-            storeFile file('D:\\Works\\Mobile Apps\\debug.keystore')
+            storeFile file('$project.rootDir\\debug.keystore')
             storePassword '198864'
             keyAlias 'androiddebugkey'
             keyPassword '198864'
         }
         release {
-            storeFile file('D:\\Works\\Mobile Apps\\my_cert.crt')
+            storeFile file('$project.rootDir\\my_cert.crt')
             storePassword '198864'
             keyAlias 'key0'
             keyPassword '198864'

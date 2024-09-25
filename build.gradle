@@ -1,11 +1,21 @@
 buildscript {
     repositories {
+        google()
+        maven {
+            url 'https://repo.cuba-platform.com/content/groups/work/'
+        }
+        maven {
+            allowInsecureProtocol="True"
+            url = "http://repo.maven.apache.org/maven2" }
+        maven {
+            allowInsecureProtocol = "True"
+            url = "http://jcenter.bintray.com"
+        }
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
-        google()
+
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
