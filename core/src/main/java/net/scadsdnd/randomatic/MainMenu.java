@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.Locale;
 
-import sun.misc.Resource;
+//import sun.misc.Resource;
 
 public class MainMenu extends ScreenAdapter {
 

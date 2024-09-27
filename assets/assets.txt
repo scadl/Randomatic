@@ -1,0 +1,7 @@
+hs_err_pid13240.log
+hs_err_pid17024.log
+icon.png
+libgdx.png
+libgdx_locale/randLoc.properties
+libgdx_locale/randLoc_ru_RU.properties
+Roboto-Regular.ttf

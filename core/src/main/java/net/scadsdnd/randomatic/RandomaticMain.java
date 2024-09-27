@@ -13,12 +13,11 @@ import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector3;
 
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.I18NBundle;
 
-import javax.xml.bind.annotation.XmlType;
+//import javax.xml.bind.annotation.XmlType;
 
 public class RandomaticMain extends Game {
 
@@ -28,9 +27,6 @@ public class RandomaticMain extends Game {
 	// Global engine variables, empty
 	ShapeRenderer shapeRenderer;
 	OrthographicCamera camera;
-
-
-
 
 	// Global text output variables, empty
 	SpriteBatch batch;
